@@ -86,14 +86,43 @@ The GNU Project Debugger。Linuxに標準的に組み込まれているデバッ
 ```
 #include <stdio.h>
 
-    int main(int argc, char *argv[]){
-        int a;
+int main(int argc, char *argv[]){
+    int a;
 
-        for(a=1;a<10;a++){
+    for(a=1;a<10;a++){
         printf("This is %d times\n",a);
-        }
-        return 0;
     }
+
+    return 0;
+}
+```
+
+---
+
+ - break , next , print
+
+   - break はbreakpointの設定です。break 行、break 関数名といった感じで指定します。
+   - next は次の行に移動します。
+   - print は変数に入っている値を表示します。 print 変数名といった感じで指定します。
+
+```C
+(gdb) break main
+Breakpoint 1 at 0x4004d3: file for.c, line 6.
+(gdb) r
+Starting program: /home/vagrant/C/test
+
+Breakpoint 1, main (argc=1, argv=0x7fffffffe728) at for.c:6
+6       for(a=1;a<10;a++){
+(gdb) p a
+$1 = 0
+(gdb) n
+7           printf("This is %d times\n",a);
+(gdb) p a
+$2 = 1
+(gdb) n
+This is 1 times
+6       for(a=1;a<10;a++){
+
 ```
 
 ---
@@ -123,4 +152,22 @@ The GNU Project Debugger。Linuxに標準的に組み込まれているデバッ
  Type "help" followed by command name for full documentation.
  Type "apropos word" to search for commands related to "word".
  Command name abbreviations are allowed if unambiguous.
+```
+
+---
+
+ - list(現在実行しているプログラムの周辺のソースコードを表示)
+
+```
+(gdb) list
+1   #include <stdio.h>
+2
+3   int main(int argc, char *argv[]){
+4       int a;
+5
+6       for(a=1;a<10;a++){
+7           printf("This is %d times\n",a);
+8       }
+9
+10      return 0;
 ```
